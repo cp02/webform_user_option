@@ -1,0 +1,5 @@
+name = Custom Webform Pre Built list of Authenticated USER
+description = Example to show how to show USERs in webform pre built lists.
+core = 7.x
+dependencies[] = webform
+files[] = custom_webform_pre_build_list.module

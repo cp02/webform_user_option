@@ -1,0 +1,35 @@
+<?php 
+
+/**
+ * Implementation of hook_webform_select_options_info().
+ * See webform/webform_hooks.php for further information on this hook in the Webform API.
+ */
+function custom_webform_pre_build_list_webform_select_options_info() {
+    $items = array();
+
+  $items['users_list'] = array(
+    'title' => t('List of Athenticated users'),
+    'options callback' => 'custom_webform_pre_build_list_get_list',
+    'options arguments' => array(),
+  );
+   
+  return $items;
+}
+
+/* Get user list and return it */
+
+function custom_webform_pre_build_list_get_list($component, $flat, $arguments) {
+
+  $all_users = entity_load('user');
+  foreach($all_users as $value) {
+    $user_list = (array)$value;
+    
+    $role_check = array_intersect(array('authenticated user'), array_values($user_list['roles']));
+    if(!empty($role_check[0])){
+    if($user_list['uid'] > 1 && $user_list['status'] == 1) {
+      $user_names[$user_list['name']] = $user_list['name'];
+    }
+   }
+  }
+  return $user_names;
+}
